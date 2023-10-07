@@ -1,4 +1,4 @@
-{pkgs ? import <nixpkgs> {}}: let
+{pkgs, ...}: let
   my-python-packages = ps:
     with ps; [
       matplotlib
