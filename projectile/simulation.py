@@ -3,6 +3,44 @@ import matplotlib.pyplot as plt
 
 
 class ProjectileSimulation:
+    """
+    A class used to simulate the motion of a projectile with air resistance.
+
+    ...
+
+    Attributes
+    ----------
+    g : float
+        acceleration due to gravity (m/s^2)
+    C_d : float
+        drag coefficient
+    v_init : float
+        initial velocity (m/s)
+    theta : float
+        launch angle (degrees to radians)
+    h_init : float
+        launch height (m)
+    dt : float
+        time step (s)
+    t_end : float
+        total time of simulation (s)
+
+    Methods
+    -------
+    reset():
+        Resets the simulation to its initial state.
+    calculate_acceleration(t, state):
+        Calculates the acceleration at a given time and state.
+    update_state(t, state):
+        Updates the state using the Runge-Kutta method.
+    run():
+        Runs the simulation.
+    plot():
+        Plots the trajectory of the projectile.
+    print_range():
+        Prints the range of the projectile.
+    """
+
     def __init__(
         self,
         g=9.81,
@@ -23,6 +61,7 @@ class ProjectileSimulation:
         self.reset()
 
     def reset(self):
+        """Resets the simulation to its initial state."""
         self.x = [0]
         self.y = [self.h_init]
         self.vx = [self.v_init * np.cos(self.theta)]
@@ -30,6 +69,7 @@ class ProjectileSimulation:
         self.t = [0]
 
     def calculate_acceleration(self, t, state):
+        """Calculates the acceleration at a given time and state."""
         x, y, vx, vy = state
         v = np.sqrt(vx**2 + vy**2)
         F_air_x = -self.C_d * v * vx
@@ -39,6 +79,7 @@ class ProjectileSimulation:
         return [vx, vy, ax, ay]
 
     def update_state(self, t, state):
+        """Updates the state using the Runge-Kutta method."""
         k1 = self.calculate_acceleration(t, state)
         k2 = self.calculate_acceleration(
             t + 0.5 * self.dt, [s + 0.5 * self.dt * k for s, k in zip(state, k1)]
@@ -55,6 +96,7 @@ class ProjectileSimulation:
         ]
 
     def run(self):
+        """Runs the simulation."""
         while self.t[-1] < self.t_end:
             state = [self.x[-1], self.y[-1], self.vx[-1], self.vy[-1]]
             state = self.update_state(self.t[-1], state)
@@ -65,6 +107,7 @@ class ProjectileSimulation:
             self.t.append(self.t[-1] + self.dt)
 
     def plot(self):
+        """Plots the trajectory of the projectile."""
         plt.plot(self.x, self.y)
         plt.xlabel("Horizontal distance (m)")
         plt.ylabel("Vertical distance (m)")
@@ -72,5 +115,6 @@ class ProjectileSimulation:
         plt.show()
 
     def print_range(self):
+        """Prints the range of the projectile."""
         range_projectile = self.x[-1]
         print(f"Range of projectile: {range_projectile:.2f} m")
