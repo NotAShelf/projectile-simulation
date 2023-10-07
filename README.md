@@ -13,7 +13,7 @@ pip install -r requirements.txt
 
 ## Usage
 
-Run the main.py script:
+Run the `main.py` script:
 
 ```shell
 python main.py
@@ -34,3 +34,8 @@ python main.py --g 9.8 --C_d 0.02 --v_init 150 --theta 45 --h_init 20 --dt 0.01 
 - `--h_init`: The launch height in meters. Default is 10.
 - `--dt`: The time step in seconds. Default is 0.01.
 - `--t_end`: The total time of the simulation in seconds. Default is 10.
+
+## Testing
+
+Tests can be invoked by simply running `pytest` in the directory. If you are contributing something new to the program, do make sure
+that it is appropriately tested in `test_main.py`.
