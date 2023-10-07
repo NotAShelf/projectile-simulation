@@ -115,6 +115,8 @@ class ProjectileSimulation:
         plt.show()
 
     def print_range(self):
-        """Returns the range of the projectile as a string."""
+        """Prints and returns the range of the projectile."""
         range_projectile = self.x[-1]
-        return f"Range of projectile: {range_projectile:.2f} m"
+        range_string = f"Range of projectile: {range_projectile:.2f} m"
+        print(range_string)
+        return range_string
