@@ -1,9 +1,13 @@
-{pkgs, ...}: let
-  my-python-packages = ps:
-    with ps; [
-      matplotlib
-      numpy
-    ];
-  my-python = pkgs.python3.withPackages my-python-packages;
+{
+  callPackage,
+  mkShellNoCC,
+  python3,
+  ...
+}: let
+  defaultPackage = callPackage ./default.nix;
 in
-  my-python.env
+  mkShellNoCC {
+    packages = [
+      (python3.withPackages defaultPackage.propagatedBuildInputs)
+    ];
+  }

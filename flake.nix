@@ -11,12 +11,14 @@
     pkgsForEach = nixpkgs.legacyPackages;
   in {
     packages = forEachSystem (system: {
-      default = pkgsForEach.${system}.callPackage ./default.nix {};
+      default = self.packages.${system}.projectile-simulation;
+      projectile-simulation = pkgsForEach.${system}.callPackage ./default.nix {};
     });
 
     devShells = forEachSystem (system: {
       devShells = {
-        default = pkgsForEach.${system}.callPackage ./shell.nix {};
+        default = self.devShells.${system}.python-shell;
+        python-shell = pkgsForEach.${system}.callPackage ./shell.nix {};
       };
     });
   };
